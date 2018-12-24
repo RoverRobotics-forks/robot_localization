@@ -79,8 +79,7 @@ void resetFilter(rclcpp::Node::SharedPtr node_)
   }
 
   auto result = client->async_send_request(setPoseRequest);
-  auto ret = rclcpp::spin_until_future_complete(node_, result,
-      5s);                                            // Wait for the result.
+  auto ret = rclcpp::spin_until_future_complete(node_, result, 5s);  // Wait for the result.
 
   double deltaX = 0.0;
   double deltaY = 0.0;
