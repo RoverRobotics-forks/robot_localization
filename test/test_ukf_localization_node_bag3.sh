@@ -11,6 +11,15 @@ ROS2_DISTRO=crystal
 echo "ROS1_DISTRO = $ROS1_DISTRO"
 echo "ROS2_DISTRO = $ROS2_DISTRO"
 
+# In this automatic Script, multiple terminals will be opened, user need to check the terminal on which bag is playing. Once bag is stoped, check the terminal on which launch.py is running, user will see, test cases result (Pass Or Fail) after pressing ctrl+c.
+
+$PWD = `pwd`
+echo "Current Working Directory = $PWD"
+ROS1_DISTRO=melodic
+ROS2_DISTRO=crystal
+echo "ROS1_DISTRO = $ROS1_DISTRO"
+echo "ROS2_DISTRO = $ROS2_DISTRO"
+
 #Command to run roscore
 cmd1="source /opt/ros/$ROS1_DISTRO/setup.sh; roscore; exec /bin/bash"
 
@@ -25,7 +34,8 @@ cmd4="sleep 2; source /opt/ros/$ROS2_DISTRO/setup.bash; source $PWD/install/setu
 
 gnome-terminal --tab -t "roscore" -- /bin/bash -c "$cmd1" 
 sleep 1
-gnome-terminal --tab -t "ros1_bridge" -- /bin/bash -c "$cmd2"
 gnome-terminal --tab -t "bag" -- /bin/bash -c "$cmd3" 
 gnome-terminal --tab -t "TestCase_launch" -- /bin/bash -c "$cmd4"
+gnome-terminal --tab -t "ros1_bridge" -- /bin/bash -c "$cmd2"
+
 
