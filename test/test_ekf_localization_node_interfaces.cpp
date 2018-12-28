@@ -79,7 +79,8 @@ void resetFilter(rclcpp::Node::SharedPtr node_)
   }
 
   auto result = client->async_send_request(setPoseRequest);
-  auto ret = rclcpp::spin_until_future_complete(node_, result, 5s);  // Wait for the result.
+  auto ret = rclcpp::spin_until_future_complete(node_, result,
+      5s);                                            // Wait for the result.
 
   double deltaX = 0.0;
   double deltaY = 0.0;
@@ -586,7 +587,7 @@ TEST(InterfacesTest, ImuTwistBasicIO) {
   custom_qos_profile.depth = 5;
   // publish and subscribe calls have been changed as per ros2
   auto imuPub = node_->create_publisher<sensor_msgs::msg::Imu>(
-    "imu_input1", custom_qos_profile);
+    "/imu_input1", custom_qos_profile);
 
   auto filteredSub = node_->create_subscription<nav_msgs::msg::Odometry>(
     "/odometry/filtered", filterCallback);
@@ -605,7 +606,7 @@ TEST(InterfacesTest, ImuTwistBasicIO) {
   for (size_t i = 0; i < 50; ++i) {
     imu.header.stamp = node_->now();
     imuPub->publish(imu);
-    loopRate1.sleep();
+    loopRate.sleep();
     rclcpp::spin_some(node_);
   }
 
@@ -629,13 +630,12 @@ TEST(InterfacesTest, ImuTwistBasicIO) {
   imu.angular_velocity.x = 0.0;
   imu.angular_velocity.y = -(M_PI / 2.0);
 
-  rclcpp::Rate loopRate2(50);
   // Make sure the pose reset worked. Test will timeout
   // if this fails.
   for (size_t i = 0; i < 50; ++i) {
     imu.header.stamp = node_->now();
     imuPub->publish(imu);
-    loopRate2.sleep();
+    loopRate.sleep();
     rclcpp::spin_some(node_);
   }
 
@@ -655,13 +655,12 @@ TEST(InterfacesTest, ImuTwistBasicIO) {
   imu.angular_velocity.y = 0;
   imu.angular_velocity.z = M_PI / 4.0;
 
-  rclcpp::Rate loopRate3(50);
   // Make sure the pose reset worked. Test will timeout
   // if this fails.
   for (size_t i = 0; i < 50; ++i) {
     imu.header.stamp = node_->now();
     imuPub->publish(imu);
-    loopRate3.sleep();
+    loopRate.sleep();
     rclcpp::spin_some(node_);
   }
 
@@ -686,11 +685,10 @@ TEST(InterfacesTest, ImuTwistBasicIO) {
   imuIgnore.angular_velocity.z = 100;
   imuIgnore.angular_velocity_covariance[0] = -1;
 
-  rclcpp::Rate loopRate4(50);
   for (size_t i = 0; i < 50; ++i) {
     imuIgnore.header.stamp = node_->now();
     imuPub->publish(imuIgnore);
-    loopRate4.sleep();
+    loopRate.sleep();
     rclcpp::spin_some(node_);
   }
 
