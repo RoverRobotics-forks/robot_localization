@@ -13,7 +13,7 @@ echo "ROS2_DISTRO = $ROS2_DISTRO"
 $PWD = `pwd`
 echo "Current Working Directory = $PWD"
 ROS1_DISTRO=melodic
-ROS2_DISTRO=crystal
+ROS2_DISTRO=bouncy
 echo "ROS1_DISTRO = $ROS1_DISTRO"
 echo "ROS2_DISTRO = $ROS2_DISTRO"
 
