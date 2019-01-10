@@ -16,7 +16,7 @@ echo "ROS2_DISTRO = $ROS2_DISTRO"
 $PWD = `pwd`
 echo "Current Working Directory = $PWD"
 ROS1_DISTRO=melodic
-ROS2_DISTRO=crystal
+ROS2_DISTRO=bouncy
 echo "ROS1_DISTRO = $ROS1_DISTRO"
 echo "ROS2_DISTRO = $ROS2_DISTRO"
 
@@ -34,8 +34,7 @@ cmd4="sleep 2; source /opt/ros/$ROS2_DISTRO/setup.bash; source $PWD/install/setu
 
 gnome-terminal --tab -t "roscore" -- /bin/bash -c "$cmd1" 
 sleep 1
+gnome-terminal --tab -t "ros1_bridge" -- /bin/bash -c "$cmd2"
 gnome-terminal --tab -t "bag" -- /bin/bash -c "$cmd3" 
 gnome-terminal --tab -t "TestCase_launch" -- /bin/bash -c "$cmd4"
-gnome-terminal --tab -t "ros1_bridge" -- /bin/bash -c "$cmd2"
-
 
