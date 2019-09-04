@@ -1851,13 +1851,12 @@ void RosFilter::run()
      * time suddenly moving backwards as well as the standard
      * timeout criterion before publishing. */
 
-    double diag_duration = (cur_time - last_diag_time).nanoseconds();
-    if (print_diagnostics_ &&
-    		(diag_duration >= diagnostic_updater_.getPeriod() ||
-    				diag_duration < 0.0))
-    {
-    	diagnostic_updater_.force_update();
-    	last_diag_time = cur_time;
+    auto diag_duration = cur_time - last_diag_time;
+    if (
+      print_diagnostics_ &&
+      (diag_duration >= diagnostic_updater_.getPeriod() || diag_duration.nanoseconds() < 0)) {
+      diagnostic_updater_.force_update();
+      last_diag_time = cur_time;
     }
 
     // Clear out expired history data
